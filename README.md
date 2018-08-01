@@ -19,6 +19,26 @@ the tool at the time of this writing.
 Once you have `go_generate` installed properly you can regenerate the code using `go generate` in the top level
 directory.
 
+## Performance
+
+The improvement in performance by using concrete types over `interface{}` is notable although in a real app
+it might be an insignificant overhead given there are so many other things going on.
+
+There is however a small benchmark suite comparing the original implementation to the generated and as you can see
+below there is a notable difference.
+
+```
+BenchmarkTypeSafeSetHasNonExisting-8        200000000        5.19 ns/op
+BenchmarkInterfaceSetHasNonExisting-8        50000000        78.4 ns/op
+BenchmarkTypeSafeSetHasExisting-8           200000000        7.09 ns/op
+BenchmarkInterfaceSetHasExisting-8           30000000         122 ns/op
+BenchmarkTypeSafeSetHasExistingMany-8       100000000        15.3 ns/op
+BenchmarkInterfaceSetHasExistingMany-8       30000000         145 ns/op
+BenchmarkTypeSafeSetAdd-8                     5000000         330 ns/op
+BenchmarkInterfaceSetAdd-8                    2000000         726 ns/op
+BenchmarkBaselineAdd-8                       50000000        72.0 ns/op
+```
+
 ## Using the library
 
 To use any of the pregenerated sets just import them in your code as per the usual Go manner. All packages have a
