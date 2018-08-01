@@ -34,3 +34,7 @@ check: .check-misspell .check-lint
 	--exclude='G104' \
 	--exclude='G304' \
 	./...
+
+test:
+	@echo "==> Running tests (race)..."
+	@go test -cover -race .
