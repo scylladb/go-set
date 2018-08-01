@@ -15,6 +15,8 @@ var (
 	nonExistent complex128
 )
 
+// Set is the main set structure that holds all the data
+// and methods used to working with the set.
 type Set struct {
 	m map[complex128]struct{}
 }
@@ -178,8 +180,8 @@ func (s *Set) Merge(t *Set) {
 	})
 }
 
-// it's not the opposite of Merge.
 // Separate removes the Set items containing in t from Set s. Please aware that
+// it's not the opposite of Merge.
 func (s *Set) Separate(t *Set) {
 	s.Remove(t.List()...)
 }

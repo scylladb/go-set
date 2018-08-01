@@ -6,8 +6,6 @@ package goset
 
 //go:generate go_generics -i set.tpl -t T=complex64 -o set/c64set/set.go -p c64set
 //go:generate go_generics -i set.tpl -t T=complex128 -o set/c128set/set.go -p c128set
-//go:generate go_generics -i set.tpl -t T=float8 -o set/f8set/set.go -p f8set
-//go:generate go_generics -i set.tpl -t T=float16 -o set/f16set/set.go -p f16set
 //go:generate go_generics -i set.tpl -t T=float32 -o set/f32set/set.go -p f32set
 //go:generate go_generics -i set.tpl -t T=float64 -o set/f64set/set.go -p f64set
 //go:generate go_generics -i set.tpl -t T=int -o set/iset/set.go -p iset
