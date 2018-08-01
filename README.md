@@ -1,0 +1,1 @@
+# go-set - type safe sets for Go
