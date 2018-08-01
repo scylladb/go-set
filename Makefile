@@ -37,4 +37,12 @@ check: .check-misspell .check-lint
 
 test:
 	@echo "==> Running tests (race)..."
-	@go test -cover -race .
+	@go test -cover -race ./...
+
+bench:
+	@echo "==> Running benchmarks..."
+	@go test -bench . ./...
+
+generate:
+	@echo "==> Running code generation..."
+	@go generate
