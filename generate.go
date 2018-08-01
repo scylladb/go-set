@@ -2,7 +2,7 @@
 // Use of this source code is governed by a ALv2-style
 // license that can be found in the LICENSE file.
 
-package templates
+package goset
 
 //go:generate go_generics -i set.tpl -t T=complex64 -o set/c64set/set.go -p c64set
 //go:generate go_generics -i set.tpl -t T=complex128 -o set/c128set/set.go -p c128set
