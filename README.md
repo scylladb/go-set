@@ -19,6 +19,19 @@ the tool at the time of this writing.
 Once you have `go_generate` installed properly you can regenerate the code using `go generate` in the top level
 directory.
 
+## Your custom types
+
+If you have types that you would like to use but the are not amenable for inclusion in this library you can
+simply copy the file `set.tpl` in the top level directory and execute the generation in your own project.
+
+Perhaps something like this given a comparable type `SomeThing`:
+
+```
+    go_generics -i set.tpl -t T=SomeThing -o seomthing.go -p somepkg
+```
+
+If you think your addition belongs here we are open to accept pull requests.
+
 ## Performance
 
 The improvement in performance by using concrete types over `interface{}` is notable although in a real app
