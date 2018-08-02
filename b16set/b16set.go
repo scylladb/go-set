@@ -2,7 +2,7 @@
 // Use of this source code is governed by a ALv2-style
 // license that can be found at https://github.com/scylladb/go-set/LICENSE.
 
-package set
+package b16set
 
 import (
 	"fmt"
@@ -12,15 +12,13 @@ import (
 var (
 	// helpful to not write everywhere struct{}{}
 	keyExists   = struct{}{}
-	nonExistent T
+	nonExistent [16]byte
 )
-
-type T struct{}
 
 // Set is the main set structure that holds all the data
 // and methods used to working with the set.
 type Set struct {
-	m map[T]struct{}
+	m map[[16]byte]struct{}
 }
 
 // New creates and initalizes a new Set interface. Its single parameter
@@ -28,13 +26,13 @@ type Set struct {
 // NonThreadSafe. The default is ThreadSafe.
 func New() *Set {
 	s := &Set{}
-	s.m = make(map[T]struct{})
+	s.m = make(map[[16]byte]struct{})
 	return s
 }
 
 // Add includes the specified items (one or more) to the Set. The underlying
 // Set s is modified. If passed nothing it silently returns.
-func (s *Set) Add(items ...T) {
+func (s *Set) Add(items ...[16]byte) {
 	if len(items) == 0 {
 		return
 	}
@@ -46,7 +44,7 @@ func (s *Set) Add(items ...T) {
 
 // Remove deletes the specified items from the Set.  The underlying Set s is
 // modified. If passed nothing it silently returns.
-func (s *Set) Remove(items ...T) {
+func (s *Set) Remove(items ...[16]byte) {
 	if len(items) == 0 {
 		return
 	}
@@ -58,7 +56,7 @@ func (s *Set) Remove(items ...T) {
 
 // Pop  deletes and return an item from the Set. The underlying Set s is
 // modified. If Set is empty, nil is returned.
-func (s *Set) Pop() T {
+func (s *Set) Pop() [16]byte {
 	for item := range s.m {
 		delete(s.m, item)
 		return item
@@ -68,7 +66,7 @@ func (s *Set) Pop() T {
 
 // Has looks for the existence of items passed. It returns false if nothing is
 // passed. For multiple items it returns true only if all of  the items exist.
-func (s *Set) Has(items ...T) bool {
+func (s *Set) Has(items ...[16]byte) bool {
 	// assume checked for empty item, which not exist
 	if len(items) == 0 {
 		return false
@@ -90,7 +88,7 @@ func (s *Set) Size() int {
 
 // Clear removes all items from the Set.
 func (s *Set) Clear() {
-	s.m = make(map[T]struct{})
+	s.m = make(map[[16]byte]struct{})
 }
 
 // IsEmpty reports whether the Set is empty.
@@ -106,7 +104,7 @@ func (s *Set) IsEqual(t *Set) bool {
 	}
 
 	equal := true
-	t.Each(func(item T) bool {
+	t.Each(func(item [16]byte) bool {
 		_, equal = s.m[item]
 		return equal // if false, Each() will end
 	})
@@ -118,7 +116,7 @@ func (s *Set) IsEqual(t *Set) bool {
 func (s *Set) IsSubset(t *Set) (subset bool) {
 	subset = true
 
-	t.Each(func(item T) bool {
+	t.Each(func(item [16]byte) bool {
 		_, subset = s.m[item]
 		return subset
 	})
@@ -134,7 +132,7 @@ func (s *Set) IsSuperset(t *Set) bool {
 // Each traverses the items in the Set, calling the provided function for each
 // Set member. Traversal will continue until all items in the Set have been
 // visited, or if the closure returns false.
-func (s *Set) Each(f func(item T) bool) {
+func (s *Set) Each(f func(item [16]byte) bool) {
 	for item := range s.m {
 		if !f(item) {
 			break
@@ -163,8 +161,8 @@ func (s *Set) String() string {
 
 // List returns a slice of all items. There is also StringSlice() and
 // IntSlice() methods for returning slices of type string or int.
-func (s *Set) List() []T {
-	list := make([]T, 0, len(s.m))
+func (s *Set) List() [][16]byte {
+	list := make([][16]byte, 0, len(s.m))
 
 	for item := range s.m {
 		list = append(list, item)
@@ -176,7 +174,7 @@ func (s *Set) List() []T {
 // Merge is like Union, however it modifies the current Set it's applied on
 // with the given t Set.
 func (s *Set) Merge(t *Set) {
-	t.Each(func(item T) bool {
+	t.Each(func(item [16]byte) bool {
 		s.m[item] = keyExists
 		return true
 	})
@@ -192,12 +190,12 @@ func (s *Set) Separate(t *Set) {
 // elements present in all the sets that are passed.
 func Union(set1, set2 *Set, sets ...*Set) *Set {
 	u := set1.Copy()
-	set2.Each(func(item T) bool {
+	set2.Each(func(item [16]byte) bool {
 		u.Add(item)
 		return true
 	})
 	for _, set := range sets {
-		set.Each(func(item T) bool {
+		set.Each(func(item [16]byte) bool {
 			u.Add(item)
 			return true
 		})
@@ -221,7 +219,7 @@ func Intersection(set1, set2 *Set, sets ...*Set) *Set {
 	all := Union(set1, set2, sets...)
 	result := Union(set1, set2, sets...)
 
-	all.Each(func(item T) bool {
+	all.Each(func(item [16]byte) bool {
 		if !set1.Has(item) || !set2.Has(item) {
 			result.Remove(item)
 		}

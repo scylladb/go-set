@@ -3,8 +3,11 @@ package i16set
 import (
 	"fmt"
 	"math/rand"
+	"reflect"
 	"strings"
 	"testing"
+	"testing/quick"
+	"time"
 
 	"github.com/fatih/set"
 )
@@ -679,46 +682,9 @@ func BenchmarkInterfaceSetAdd(b *testing.B) {
 }
 
 func createRandomObject(i interface{}) interface{} {
-
-	if _, ok := i.(int8); ok {
-		return int8(rand.Int())
+	v, ok := quick.Value(reflect.TypeOf(i), rand.New(rand.NewSource(time.Now().UnixNano())))
+	if !ok {
+		panic(fmt.Sprintf("unsupported type %v", i))
 	}
-	if _, ok := i.(int16); ok {
-		return int16(rand.Int())
-	}
-	if _, ok := i.(int32); ok {
-		return rand.Int31()
-	}
-	if _, ok := i.(int); ok {
-		return int(rand.Int())
-	}
-	if _, ok := i.(int64); ok {
-		return rand.Int63()
-	}
-	if _, ok := i.(uint8); ok {
-		return uint8(rand.Int())
-	}
-	if _, ok := i.(uint16); ok {
-		return uint16(rand.Int())
-	}
-	if _, ok := i.(uint32); ok {
-		return uint32(rand.Int31())
-	}
-	if _, ok := i.(uint); ok {
-		return uint(rand.Int31())
-	}
-	if _, ok := i.(uint64); ok {
-		return uint64(rand.Int63())
-	}
-	if _, ok := i.(float32); ok {
-		return rand.Float32()
-	}
-	if _, ok := i.(float64); ok {
-		return rand.Float64()
-	}
-	if _, ok := i.(string); ok {
-		return fmt.Sprintf("%d", rand.Int63())
-	}
-
-	panic(fmt.Sprintf("unsupported type, %v", i))
+	return v.Interface()
 }

@@ -1,10 +1,13 @@
-package templates
+package set
 
 import (
 	"fmt"
 	"math/rand"
+	"reflect"
 	"strings"
 	"testing"
+	"testing/quick"
+	"time"
 
 	"github.com/fatih/set"
 )
@@ -28,7 +31,7 @@ func TestAdd(t *testing.T) {
 
 	if len(s.m) != 2 {
 		t.Errorf("expected 2 entries, got %d", len(s.m))
-	} 
+	}
 }
 
 func TestRemove(t *testing.T) {
@@ -52,7 +55,7 @@ func TestRemove(t *testing.T) {
 		t.Errorf("expected 1 entries, got %d", len(s.m))
 	}
 
-	if _, ok :=s.m[e2]; !ok {
+	if _, ok := s.m[e2]; !ok {
 		t.Errorf("wrong entry %v removed, expected %v", e1, e2)
 	}
 }
@@ -296,11 +299,11 @@ func TestString(t *testing.T) {
 
 	s := s1.String()
 
-	if  s == ""{
+	if s == "" {
 		t.Errorf("expected string representation %v to exist", s)
 	}
 
-	if !strings.HasPrefix(s,"[") && !strings.HasSuffix(s,"]") {
+	if !strings.HasPrefix(s, "[") && !strings.HasSuffix(s, "]") {
 		t.Errorf("expected string representation %v to start with '[' and end with ']'", s)
 	}
 }
@@ -650,11 +653,11 @@ func BenchmarkTypeSafeSetAdd(b *testing.B) {
 	b.StopTimer()
 	var e T
 	s := New()
-	objs := make([]T,0,b.N)
+	objs := make([]T, 0, b.N)
 	for i := 0; i < b.N; i++ {
 		e := createRandomObject(e)
 		if v, ok := e.(T); ok {
-			objs = append(objs,v)
+			objs = append(objs, v)
 		}
 	}
 	b.StartTimer()
@@ -667,11 +670,11 @@ func BenchmarkInterfaceSetAdd(b *testing.B) {
 	b.StopTimer()
 	var e T
 	s := set.New(set.NonThreadSafe)
-	objs := make([]T,0,b.N)
+	objs := make([]T, 0, b.N)
 	for i := 0; i < b.N; i++ {
 		e := createRandomObject(e)
 		if v, ok := e.(T); ok {
-			objs = append(objs,v)
+			objs = append(objs, v)
 		}
 	}
 	b.StartTimer()
@@ -681,46 +684,9 @@ func BenchmarkInterfaceSetAdd(b *testing.B) {
 }
 
 func createRandomObject(i interface{}) interface{} {
-
-	if _, ok := i.(int8); ok {
-		return int8(rand.Int())
+	v, ok := quick.Value(reflect.TypeOf(i), rand.New(rand.NewSource(time.Now().UnixNano())))
+	if !ok {
+		panic(fmt.Sprintf("unsupported type %v",i))
 	}
-	if _, ok := i.(int16); ok {
-		return int16(rand.Int())
-	}
-	if _, ok := i.(int32); ok {
-		return rand.Int31()
-	}
-	if _, ok := i.(int); ok {
-		return int(rand.Int())
-	}
-	if _, ok := i.(int64); ok {
-		return rand.Int63()
-	}
-	if _, ok := i.(uint8); ok {
-		return uint8(rand.Int())
-	}
-	if _, ok := i.(uint16); ok {
-		return uint16(rand.Int())
-	}
-	if _, ok := i.(uint32); ok {
-		return uint32(rand.Int31())
-	}
-	if _, ok := i.(uint); ok {
-		return uint(rand.Int31())
-	}
-	if _, ok := i.(uint64); ok {
-		return uint64(rand.Int63())
-	}
-	if _, ok := i.(float32); ok {
-		return rand.Float32()
-	}
-	if _, ok := i.(float64); ok {
-		return rand.Float64()
-	}
-	if _, ok := i.(string); ok {
-		return fmt.Sprintf("%d", rand.Int63())
-	}
-
-	panic(fmt.Sprintf("unsupported type, %v", i))
+	return v.Interface()
 }

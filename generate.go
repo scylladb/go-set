@@ -5,6 +5,7 @@
 package set
 
 import (
+	"github.com/scylladb/go-set/b16set"
 	"github.com/scylladb/go-set/f32set"
 	"github.com/scylladb/go-set/f64set"
 	"github.com/scylladb/go-set/i16set"
@@ -122,4 +123,12 @@ func NewUint64Set() *u64set.Set {
 // NewStringSet is a convenience function to create a new sset.Set
 func NewStringSet() *sset.Set {
 	return sset.New()
+}
+
+//go:generate go_generics -i set.tpl -t T=[16]byte -o b16set/b16set.go -p b16set
+//go:generate go_generics -i set_test.tpl -t T=[16]byte -o b16set/b16set_test.go -p b16set
+
+// NewByte16Set is a convenience function to create a new b16set.Set
+func NewByte16Set() *b16set.Set {
+	return b16set.New()
 }
