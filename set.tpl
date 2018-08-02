@@ -99,7 +99,7 @@ func (s *Set) IsEmpty() bool {
 }
 
 // IsEqual test whether s and t are the same in size and have the same items.
-func (s *Set) IsEqual(t Set) bool {
+func (s *Set) IsEqual(t *Set) bool {
 	// return false if they are no the same size
 	if sameSize := len(s.m) == t.Size(); !sameSize {
 		return false
