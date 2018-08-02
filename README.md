@@ -12,11 +12,11 @@ ready to use as is set of packages for when you need sets.
 
 ## Code generation
 
-For code generation we use the [gVisor](https://github.com/google/gvisor) tool [go_generate](https://github.com/google/gvisor/tree/master/tools/go_generics). To install this tool you need to follow gVisor
+For code generation we use the [gVisor](https://github.com/google/gvisor) tool [go_generics](https://github.com/google/gvisor/tree/master/tools/go_generics). To install this tool you need to follow gVisor
 instructions for building gVisor and use the resulting go_generate binary. There is unfortunately no way to `go get`
 the tool at the time of this writing.
 
-Once you have `go_generate` installed properly you can regenerate the code using `go generate` in the top level
+Once you have `go_generics` installed properly you can regenerate the code using `go generate` in the top level
 directory.
 
 ## Your custom types
@@ -27,7 +27,7 @@ simply copy the file `set.tpl` in the top level directory and execute the genera
 Perhaps something like this given a comparable type `SomeThing`:
 
 ```
-    go_generics -i set.tpl -t T=SomeThing -o seomthing.go -p somepkg
+    go_generics -i set.tpl -t T=SomeThing -o something.go -p somepkg
 ```
 
 If you think your addition belongs here we are open to accept pull requests.
@@ -71,9 +71,19 @@ if s.Has("entry 2") {
 }
 ```
 
-The library has several of the more convenient set operations for `unions` and `disjunctions` etc as well.
+The library exposes a number of top level factory functions that can be used to create specific instances of the 
+set type you want to use. For example to create a set to store `int` you could do like this:
 
-To calculate the intersection of two sets do this:
+```go
+import "github.com/scylladb/go-set"
+
+s := set.NewIntSet()
+//... use the set...
+```
+
+Several of the more convenient set operations for `unions` and `disjunctions` etc are available as well.
+
+For example to calculate the intersection of two sets do this:
 
 ```go
 s1 := sset.New()
@@ -86,5 +96,5 @@ s2.Add("entry 3")
 
 s3 := sset.Intersection(s1, s2)
 
-// s3 no contains only "entry 2"
+// s3 now contains only "entry 2"
 ```
