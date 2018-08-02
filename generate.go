@@ -6,6 +6,9 @@ package set
 
 import (
 	"github.com/scylladb/go-set/b16set"
+	"github.com/scylladb/go-set/b32set"
+	"github.com/scylladb/go-set/b64set"
+	"github.com/scylladb/go-set/b8set"
 	"github.com/scylladb/go-set/f32set"
 	"github.com/scylladb/go-set/f64set"
 	"github.com/scylladb/go-set/i16set"
@@ -125,10 +128,34 @@ func NewStringSet() *sset.Set {
 	return sset.New()
 }
 
+//go:generate go_generics -i set.tpl -t T=[8]byte -o b8set/b16set.go -p b8set
+//go:generate go_generics -i set_test.tpl -t T=[8]byte -o b8set/b8set_test.go -p b8set
+
+// NewByte8Set is a convenience function to create a new b16set.Set
+func NewByte8Set() *b8set.Set {
+	return b8set.New()
+}
+
 //go:generate go_generics -i set.tpl -t T=[16]byte -o b16set/b16set.go -p b16set
 //go:generate go_generics -i set_test.tpl -t T=[16]byte -o b16set/b16set_test.go -p b16set
 
 // NewByte16Set is a convenience function to create a new b16set.Set
 func NewByte16Set() *b16set.Set {
 	return b16set.New()
+}
+
+//go:generate go_generics -i set.tpl -t T=[32]byte -o b32set/b32set.go -p b32set
+//go:generate go_generics -i set_test.tpl -t T=[32]byte -o b32set/b32set_test.go -p b32set
+
+// NewByte32Set is a convenience function to create a new b32set.Set
+func NewByte32Set() *b32set.Set {
+	return b32set.New()
+}
+
+//go:generate go_generics -i set.tpl -t T=[64]byte -o b64set/b64set.go -p b64set
+//go:generate go_generics -i set_test.tpl -t T=[64]byte -o b64set/b64set_test.go -p b64set
+
+// NewByte64Set is a convenience function to create a new b32set.Set
+func NewByte64Set() *b64set.Set {
+	return b64set.New()
 }
