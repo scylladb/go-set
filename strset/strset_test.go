@@ -1,4 +1,4 @@
-package set
+package strset
 
 import (
 	"fmt"
@@ -12,16 +12,14 @@ import (
 	"github.com/fatih/set"
 )
 
-type T struct{}
-
 func TestAdd(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -35,13 +33,13 @@ func TestAdd(t *testing.T) {
 }
 
 func TestRemove(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -61,13 +59,13 @@ func TestRemove(t *testing.T) {
 }
 
 func TestPop(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -88,17 +86,17 @@ func TestPop(t *testing.T) {
 }
 
 func TestHas(t *testing.T) {
-	var e1, e2, e3 T
+	var e1, e2, e3 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e3 = v
 	}
 
@@ -122,13 +120,13 @@ func TestHas(t *testing.T) {
 }
 
 func TestSize(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -142,13 +140,13 @@ func TestSize(t *testing.T) {
 }
 
 func TestClear(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -164,13 +162,13 @@ func TestClear(t *testing.T) {
 }
 
 func TestIsEmpty(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -188,13 +186,13 @@ func TestIsEmpty(t *testing.T) {
 }
 
 func TestIsEqual(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -218,13 +216,13 @@ func TestIsEqual(t *testing.T) {
 }
 
 func TestIsSubset(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -241,13 +239,13 @@ func TestIsSubset(t *testing.T) {
 }
 
 func TestIsSuperset(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -264,13 +262,13 @@ func TestIsSuperset(t *testing.T) {
 }
 
 func TestCopy(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -287,9 +285,9 @@ func TestCopy(t *testing.T) {
 }
 
 func TestString(t *testing.T) {
-	var e1 T
+	var e1 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 
@@ -309,13 +307,13 @@ func TestString(t *testing.T) {
 }
 
 func TestMerge(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -333,13 +331,13 @@ func TestMerge(t *testing.T) {
 }
 
 func TestList(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -362,13 +360,13 @@ func TestList(t *testing.T) {
 }
 
 func TestSeparate(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -392,13 +390,13 @@ func TestSeparate(t *testing.T) {
 }
 
 func TestEach(t *testing.T) {
-	var e1, e2 T
+	var e1, e2 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 
@@ -406,9 +404,9 @@ func TestEach(t *testing.T) {
 	s1.Add(e1)
 	s1.Add(e2)
 
-	found := make(map[T]bool)
+	found := make(map[string]bool)
 
-	s1.Each(func(item T) bool {
+	s1.Each(func(item string) bool {
 		found[item] = true
 		return true
 	})
@@ -417,9 +415,9 @@ func TestEach(t *testing.T) {
 		t.Errorf("not all items traversed only %v", found)
 	}
 
-	found = make(map[T]bool)
+	found = make(map[string]bool)
 	count := 0
-	s1.Each(func(item T) bool {
+	s1.Each(func(item string) bool {
 		found[item] = true
 		count++
 		if count > 0 {
@@ -434,17 +432,17 @@ func TestEach(t *testing.T) {
 }
 
 func TestIntersection(t *testing.T) {
-	var e1, e2, e3 T
+	var e1, e2, e3 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 	e = createRandomObject(e3)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e3 = v
 	}
 
@@ -464,17 +462,17 @@ func TestIntersection(t *testing.T) {
 }
 
 func TestUnion(t *testing.T) {
-	var e1, e2, e3 T
+	var e1, e2, e3 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 	e = createRandomObject(e3)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e3 = v
 	}
 
@@ -494,17 +492,17 @@ func TestUnion(t *testing.T) {
 }
 
 func TestDifference(t *testing.T) {
-	var e1, e2, e3 T
+	var e1, e2, e3 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 	e = createRandomObject(e3)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e3 = v
 	}
 
@@ -524,17 +522,17 @@ func TestDifference(t *testing.T) {
 }
 
 func TestSymmetricDifference(t *testing.T) {
-	var e1, e2, e3 T
+	var e1, e2, e3 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	e = createRandomObject(e2)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e2 = v
 	}
 	e = createRandomObject(e3)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e3 = v
 	}
 
@@ -555,9 +553,9 @@ func TestSymmetricDifference(t *testing.T) {
 
 func BenchmarkTypeSafeSetHasNonExisting(b *testing.B) {
 	b.StopTimer()
-	var e1 T
+	var e1 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	b.StartTimer()
@@ -569,9 +567,9 @@ func BenchmarkTypeSafeSetHasNonExisting(b *testing.B) {
 
 func BenchmarkInterfaceSetHasNonExisting(b *testing.B) {
 	b.StopTimer()
-	var e1 T
+	var e1 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	b.StartTimer()
@@ -583,9 +581,9 @@ func BenchmarkInterfaceSetHasNonExisting(b *testing.B) {
 
 func BenchmarkTypeSafeSetHasExisting(b *testing.B) {
 	b.StopTimer()
-	var e1 T
+	var e1 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	b.StartTimer()
@@ -598,9 +596,9 @@ func BenchmarkTypeSafeSetHasExisting(b *testing.B) {
 
 func BenchmarkInterfaceSetHasExisting(b *testing.B) {
 	b.StopTimer()
-	var e1 T
+	var e1 string
 	e := createRandomObject(e1)
-	if v, ok := e.(T); ok {
+	if v, ok := e.(string); ok {
 		e1 = v
 	}
 	b.StartTimer()
@@ -614,10 +612,10 @@ func BenchmarkInterfaceSetHasExisting(b *testing.B) {
 func BenchmarkTypeSafeSetHasExistingMany(b *testing.B) {
 	s := New()
 	b.StopTimer()
-	var e1 T
+	var e1 string
 	for i := 0; i < 10000; i++ {
 		e := createRandomObject(e1)
-		if v, ok := e.(T); ok {
+		if v, ok := e.(string); ok {
 			s.Add(v)
 			if i == 5000 {
 				e1 = v
@@ -633,10 +631,10 @@ func BenchmarkTypeSafeSetHasExistingMany(b *testing.B) {
 func BenchmarkInterfaceSetHasExistingMany(b *testing.B) {
 	s := set.New(set.NonThreadSafe)
 	b.StopTimer()
-	var e1 T
+	var e1 string
 	for i := 0; i < 10000; i++ {
 		e := createRandomObject(e1)
-		if v, ok := e.(T); ok {
+		if v, ok := e.(string); ok {
 			s.Add(v)
 			if i == 5000 {
 				e1 = v
@@ -651,12 +649,12 @@ func BenchmarkInterfaceSetHasExistingMany(b *testing.B) {
 
 func BenchmarkTypeSafeSetAdd(b *testing.B) {
 	b.StopTimer()
-	var e T
+	var e string
 	s := New()
-	objs := make([]T, 0, b.N)
+	objs := make([]string, 0, b.N)
 	for i := 0; i < b.N; i++ {
 		e := createRandomObject(e)
-		if v, ok := e.(T); ok {
+		if v, ok := e.(string); ok {
 			objs = append(objs, v)
 		}
 	}
@@ -668,12 +666,12 @@ func BenchmarkTypeSafeSetAdd(b *testing.B) {
 
 func BenchmarkInterfaceSetAdd(b *testing.B) {
 	b.StopTimer()
-	var e T
+	var e string
 	s := set.New(set.NonThreadSafe)
-	objs := make([]T, 0, b.N)
+	objs := make([]string, 0, b.N)
 	for i := 0; i < b.N; i++ {
 		e := createRandomObject(e)
-		if v, ok := e.(T); ok {
+		if v, ok := e.(string); ok {
 			objs = append(objs, v)
 		}
 	}
@@ -686,7 +684,7 @@ func BenchmarkInterfaceSetAdd(b *testing.B) {
 func createRandomObject(i interface{}) interface{} {
 	v, ok := quick.Value(reflect.TypeOf(i), rand.New(rand.NewSource(time.Now().UnixNano())))
 	if !ok {
-		panic(fmt.Sprintf("unsupported type %v",i))
+		panic(fmt.Sprintf("unsupported type %v", i))
 	}
 	return v.Interface()
 }

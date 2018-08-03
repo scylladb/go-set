@@ -2,7 +2,7 @@
 // Use of this source code is governed by a ALv2-style
 // license that can be found at https://github.com/scylladb/go-set/LICENSE.
 
-package sset
+package strset
 
 import (
 	"fmt"
@@ -21,9 +21,7 @@ type Set struct {
 	m map[string]struct{}
 }
 
-// New creates and initalizes a new Set interface. Its single parameter
-// denotes the type of set to create. Either ThreadSafe or
-// NonThreadSafe. The default is ThreadSafe.
+// New creates and initializes a new Set interface.
 func New(ts ...string) *Set {
 	s := &Set{}
 	s.m = make(map[string]struct{})
@@ -210,7 +208,7 @@ func Difference(set1, set2 *Set, sets ...*Set) *Set {
 	s := set1.Copy()
 	s.Separate(set2)
 	for _, set := range sets {
-		s.Separate(set) // seperate is thread safe
+		s.Separate(set) // separate is thread safe
 	}
 	return s
 }
