@@ -2,12 +2,14 @@
 // Use of this source code is governed by a ALv2-style
 // license that can be found at https://github.com/scylladb/go-set/LICENSE.
 
-package set
+package _template
 
 import (
 	"fmt"
 	"strings"
 )
+
+type T = Template
 
 var (
 	// helpful to not write everywhere struct{}{}
@@ -15,17 +17,13 @@ var (
 	nonExistent T
 )
 
-type T struct{}
-
 // Set is the main set structure that holds all the data
 // and methods used to working with the set.
 type Set struct {
 	m map[T]struct{}
 }
 
-// New creates and initalizes a new Set interface. Its single parameter
-// denotes the type of set to create. Either ThreadSafe or
-// NonThreadSafe. The default is ThreadSafe.
+// New creates and initializes a new Set interface.
 func New(ts ...T) *Set {
 	s := &Set{}
 	s.m = make(map[T]struct{})
@@ -212,7 +210,7 @@ func Difference(set1, set2 *Set, sets ...*Set) *Set {
 	s := set1.Copy()
 	s.Separate(set2)
 	for _, set := range sets {
-		s.Separate(set) // seperate is thread safe
+		s.Separate(set) // separate is thread safe
 	}
 	return s
 }

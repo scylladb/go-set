@@ -21,9 +21,7 @@ type Set struct {
 	m map[int32]struct{}
 }
 
-// New creates and initalizes a new Set interface. Its single parameter
-// denotes the type of set to create. Either ThreadSafe or
-// NonThreadSafe. The default is ThreadSafe.
+// New creates and initializes a new Set interface.
 func New(ts ...int32) *Set {
 	s := &Set{}
 	s.m = make(map[int32]struct{})
@@ -210,7 +208,7 @@ func Difference(set1, set2 *Set, sets ...*Set) *Set {
 	s := set1.Copy()
 	s.Separate(set2)
 	for _, set := range sets {
-		s.Separate(set) // seperate is thread safe
+		s.Separate(set) // separate is thread safe
 	}
 	return s
 }
