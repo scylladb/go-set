@@ -3,4 +3,4 @@ language: go
 go:
   - "1.10.3"
 
-script: make test
+script: make deps test

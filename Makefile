@@ -35,6 +35,9 @@ check: .check-misspell .check-lint
 	--exclude='G304' \
 	./...
 
+deps:
+	go get -t ./...
+
 test:
 	@echo "==> Running tests (race)..."
 	@go test -cover -race ./...
