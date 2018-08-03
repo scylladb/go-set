@@ -24,9 +24,10 @@ type Set struct {
 // New creates and initalizes a new Set interface. Its single parameter
 // denotes the type of set to create. Either ThreadSafe or
 // NonThreadSafe. The default is ThreadSafe.
-func New() *Set {
+func New(ts ...int) *Set {
 	s := &Set{}
 	s.m = make(map[int]struct{})
+	s.Add(ts...)
 	return s
 }
 
