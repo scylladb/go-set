@@ -10,6 +10,10 @@ to adopt it. We are however fans of type safe code so in the process we decided 
 generate code for the types we needed. This repository contains most of the simple types and is considered a
 ready to use as is set of packages for when you need sets.
 
+## Build status
+
+[![Travis CI](https://travis-ci.org/scylladb/go-set.svg?branch=master)](https://travis-ci.org/scylladb/go-set)
+
 ## Code generation
 
 For code generation we use the [gVisor](https://github.com/google/gvisor) tool [go_generics](https://github.com/google/gvisor/tree/master/tools/go_generics). To install this tool you need to follow gVisor
