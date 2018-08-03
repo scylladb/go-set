@@ -260,8 +260,8 @@ If you have types that you would like to use but the are not amenable for inclus
 For example, to generate a set for `SomeType` in package `sometypeset` call:
 
 ```
-$ go_generics -i _template/set.go -t T=SomeType -o path/to/outputfile.go -p sometypeset
-$ go_generics -i _template/set_test.go -t P=SomeType -o path/to/outputfile_test.go -p sometypeset
+$ go_generics -i internal/set/set.go -t T=SomeType -o path/to/outputfile.go -p sometypeset
+$ go_generics -i internal/set/set_test.go -t P=SomeType -o path/to/outputfile_test.go -p sometypeset
 ```
 
 If you think your addition belongs here we are open to accept pull requests.
