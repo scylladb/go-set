@@ -44,7 +44,7 @@ test:
 
 bench:
 	@echo "==> Running benchmarks..."
-	@go test -bench . ./...
+	@go test -run=XXX -bench=. -benchmem ./...
 
 generate:
 	@echo "==> Running code generation..."

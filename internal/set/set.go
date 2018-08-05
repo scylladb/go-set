@@ -2,13 +2,14 @@
 // Use of this source code is governed by a ALv2-style
 // license that can be found at https://github.com/scylladb/go-set/LICENSE.
 
-package _template
+package set
 
 import (
 	"fmt"
 	"strings"
 )
 
+// T is a Template type.
 type T = Template
 
 var (

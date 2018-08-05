@@ -1,4 +1,4 @@
-package _template
+package set
 
 import (
 	"fmt"
@@ -12,6 +12,7 @@ import (
 	"github.com/fatih/set"
 )
 
+// P is a Template type.
 type P = Template
 
 func TestAdd(t *testing.T) {
