@@ -49,7 +49,7 @@ sets.
 ```go
 func New(ts ...int) *Set
 ```
-New creates and initalizes a new Set interface. Its single parameter denotes the
+New creates and initializes a new Set interface. Its single parameter denotes the
 type of set to create. Either ThreadSafe or NonThreadSafe. The default is
 ThreadSafe.
 
