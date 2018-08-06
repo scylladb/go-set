@@ -275,8 +275,4 @@ It contains software from:
 
 * [github.com/fatih/set](https://github.com/fatih/set), licensed under the MIT license
 
-Apache®, Apache Cassandra® are either registered trademarks or trademarks of 
-the Apache Software Foundation in the United States and/or other countries. 
-No endorsement by The Apache Software Foundation is implied by the use of these marks.
-
 GitHub star is always appreciated!
