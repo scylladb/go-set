@@ -1,6 +1,6 @@
 # Set [![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/scylladb/go-set) [![Go Report Card](https://goreportcard.com/badge/github.com/scylladb/go-set)](https://goreportcard.com/report/github.com/scylladb/go-set) [![Build Status](https://travis-ci.org/scylladb/go-set.svg?branch=master)](https://travis-ci.org/scylladb/go-set)
 
-Package set is a type-safe, allocation free port of the excellent package [fatih/set](https://github.com/fatih/set). It contains sets for most of the basic types and you can generate set for your own types with ease.
+Package set is a type-safe, zero-allocation port of the excellent package [fatih/set](https://github.com/fatih/set). It contains sets for most of the basic types and you can generate set for your own types with ease.
 
 ## Example
 
