@@ -216,7 +216,7 @@ func TestIsEqual(t *testing.T) {
 }
 
 func TestIsSubset(t *testing.T) {
-	var e1, e2 int
+	var e1, e2, e3 int
 	e := createRandomObject(e1)
 	if v, ok := e.(int); ok {
 		e1 = v
@@ -224,6 +224,10 @@ func TestIsSubset(t *testing.T) {
 	e = createRandomObject(e2)
 	if v, ok := e.(int); ok {
 		e2 = v
+	}
+	e = createRandomObject(e2)
+	if v, ok := e.(int); ok {
+		e3 = v
 	}
 
 	s1 := New()
@@ -235,6 +239,12 @@ func TestIsSubset(t *testing.T) {
 
 	if !s1.IsSubset(s2) {
 		t.Errorf("expected %v to be a subset of %v", s2, s1)
+	}
+
+	s2.Add(e2)
+	s2.Add(e3)
+	if s1.IsSubset(s2) {
+		t.Errorf("expected %v not to be a subset of %v", s2, s1)
 	}
 }
 

@@ -112,15 +112,19 @@ func (s *Set) IsEqual(t *Set) bool {
 }
 
 // IsSubset tests whether t is a subset of s.
-func (s *Set) IsSubset(t *Set) (subset bool) {
-	subset = true
+func (s *Set) IsSubset(t *Set) bool {
+	if len(t.m) > len(s.m) {
+		return false
+	}
+
+	subset := true
 
 	t.Each(func(item [64]byte) bool {
 		_, subset = s.m[item]
 		return subset
 	})
 
-	return
+	return subset
 }
 
 // IsSuperset tests whether t is a superset of s.
