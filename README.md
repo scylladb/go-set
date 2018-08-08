@@ -247,9 +247,12 @@ BenchmarkInterfaceSetAdd-4                       3000000               408 ns/op
 ```
 
 ## Code generation
+For code generation we use [Google go_generics tool](https://github.com/mmatczuk/go_generics) that we forked to provide bazel-free installation, to install run:
 
-For code generation we use Google [go_generics](https://github.com/google/gvisor/tree/master/tools/go_generics) which is part of the [gVisor](https://github.com/google/gvisor) project. To install this tool you need to follow gVisor
-instructions for building gVisor and use the resulting go_generate binary. There is unfortunately no way to `go get` the tool at the time of writing. 
+```bash
+go get -u github.com/mmatczuk/go_generics/cmd/go_generics
+go get -u github.com/mmatczuk/go_generics/cmd/go_merge
+``` 
 
 Once you have `go_generics` installed properly you can regenerate the code using `go generate` in the top level directory.
 
@@ -260,8 +263,8 @@ If you have types that you would like to use but the are not amenable for inclus
 For example, to generate a set for `SomeType` in package `sometypeset` call:
 
 ```
-$ go_generics -i internal/set/set.go -t T=SomeType -o path/to/outputfile.go -p sometypeset
-$ go_generics -i internal/set/set_test.go -t P=SomeType -o path/to/outputfile_test.go -p sometypeset
+go_generics -i internal/set/set.go -t T=SomeType -o path/to/outputfile.go -p sometypeset
+go_generics -i internal/set/set_test.go -t P=SomeType -o path/to/outputfile_test.go -p sometypeset
 ```
 
 If you think your addition belongs here we are open to accept pull requests.
