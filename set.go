@@ -25,7 +25,7 @@ import (
 )
 
 //go:generate mkdir -p b8set
-//go:generate go_generics -i internal/set/set.go -t T=[8]byte -o b8set/b16set.go -p b8set
+//go:generate go_generics -i internal/set/set.go -t T=[8]byte -o b8set/b8set.go -p b8set
 //go:generate go_generics -i internal/set/set_test.go -t P=[8]byte -o b8set/b8set_test.go -p b8set
 
 // NewByte8Set is a convenience function to create a new b16set.Set
