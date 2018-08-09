@@ -6,6 +6,7 @@ package i8set
 
 import (
 	"fmt"
+	"math"
 	"strings"
 )
 
@@ -23,31 +24,32 @@ type Set struct {
 
 // New creates and initializes a new Set interface.
 func New(ts ...int8) *Set {
-	s := &Set{}
-	s.m = make(map[int8]struct{})
+	s := newSet(len(ts))
 	s.Add(ts...)
 	return s
+}
+
+func newSet(size int) *Set {
+	var m map[int8]struct{}
+	if size < 4 {
+		m = make(map[int8]struct{}, 4)
+	} else {
+		m = make(map[int8]struct{}, int(float64(size)*1.25))
+	}
+	return &Set{m}
 }
 
 // Add includes the specified items (one or more) to the Set. The underlying
 // Set s is modified. If passed nothing it silently returns.
 func (s *Set) Add(items ...int8) {
-	if len(items) == 0 {
-		return
-	}
-
 	for _, item := range items {
 		s.m[item] = keyExists
 	}
 }
 
-// Remove deletes the specified items from the Set.  The underlying Set s is
+// Remove deletes the specified items from the Set. The underlying Set s is
 // modified. If passed nothing it silently returns.
 func (s *Set) Remove(items ...int8) {
-	if len(items) == 0 {
-		return
-	}
-
 	for _, item := range items {
 		delete(s.m, item)
 	}
@@ -66,12 +68,7 @@ func (s *Set) Pop() int8 {
 // Has looks for the existence of items passed. It returns false if nothing is
 // passed. For multiple items it returns true only if all of  the items exist.
 func (s *Set) Has(items ...int8) bool {
-	// assume checked for empty item, which not exist
-	if len(items) == 0 {
-		return false
-	}
-
-	has := true
+	has := false
 	for _, item := range items {
 		if _, has = s.m[item]; !has {
 			break
@@ -98,7 +95,7 @@ func (s *Set) IsEmpty() bool {
 // IsEqual test whether s and t are the same in size and have the same items.
 func (s *Set) IsEqual(t *Set) bool {
 	// return false if they are no the same size
-	if sameSize := len(s.m) == t.Size(); !sameSize {
+	if s.Size() != t.Size() {
 		return false
 	}
 
@@ -113,7 +110,7 @@ func (s *Set) IsEqual(t *Set) bool {
 
 // IsSubset tests whether t is a subset of s.
 func (s *Set) IsSubset(t *Set) bool {
-	if len(t.m) > len(s.m) {
+	if s.Size() < t.Size() {
 		return false
 	}
 
@@ -145,100 +142,116 @@ func (s *Set) Each(f func(item int8) bool) {
 
 // Copy returns a new Set with a copy of s.
 func (s *Set) Copy() *Set {
-	u := New()
+	u := newSet(s.Size())
 	for item := range s.m {
-		u.Add(item)
+		u.m[item] = keyExists
 	}
 	return u
 }
 
 // String returns a string representation of s
 func (s *Set) String() string {
-	t := make([]string, 0, len(s.List()))
-	for _, item := range s.List() {
-		t = append(t, fmt.Sprintf("%v", item))
+	v := make([]string, 0, s.Size())
+	for item := range s.m {
+		v = append(v, fmt.Sprintf("%v", item))
 	}
-
-	return fmt.Sprintf("[%s]", strings.Join(t, ", "))
+	return fmt.Sprintf("[%s]", strings.Join(v, ", "))
 }
 
 // List returns a slice of all items. There is also StringSlice() and
 // IntSlice() methods for returning slices of type string or int.
 func (s *Set) List() []int8 {
-	list := make([]int8, 0, len(s.m))
-
+	v := make([]int8, 0, s.Size())
 	for item := range s.m {
-		list = append(list, item)
+		v = append(v, item)
 	}
-
-	return list
+	return v
 }
 
 // Merge is like Union, however it modifies the current Set it's applied on
 // with the given t Set.
 func (s *Set) Merge(t *Set) {
-	t.Each(func(item int8) bool {
+	for item := range t.m {
 		s.m[item] = keyExists
-		return true
-	})
+	}
 }
 
 // Separate removes the Set items containing in t from Set s. Please aware that
 // it's not the opposite of Merge.
 func (s *Set) Separate(t *Set) {
-	s.Remove(t.List()...)
+	for item := range t.m {
+		delete(s.m, item)
+	}
 }
 
 // Union is the merger of multiple sets. It returns a new set with all the
 // elements present in all the sets that are passed.
-func Union(set1, set2 *Set, sets ...*Set) *Set {
-	u := set1.Copy()
-	set2.Each(func(item int8) bool {
-		u.Add(item)
-		return true
-	})
-	for _, set := range sets {
-		set.Each(func(item int8) bool {
-			u.Add(item)
-			return true
-		})
+func Union(sets ...*Set) *Set {
+	maxPos := -1
+	maxSize := 0
+	for i, set := range sets {
+		if l := set.Size(); l > maxSize {
+			maxSize = l
+			maxPos = i
+		}
+	}
+	if maxSize == 0 {
+		return New()
+	}
+
+	u := sets[maxPos].Copy()
+	for i, set := range sets {
+		if i == maxPos {
+			continue
+		}
+		for item := range set.m {
+			u.m[item] = keyExists
+		}
 	}
 	return u
 }
 
 // Difference returns a new set which contains items which are in in the first
 // set but not in the others.
-func Difference(set1, set2 *Set, sets ...*Set) *Set {
+func Difference(set1 *Set, sets ...*Set) *Set {
 	s := set1.Copy()
-	s.Separate(set2)
 	for _, set := range sets {
-		s.Separate(set) // separate is thread safe
+		s.Separate(set)
 	}
 	return s
 }
 
-// Intersection returns a new set which contains items that only exist in all given sets.
-func Intersection(set1, set2 *Set, sets ...*Set) *Set {
-	all := Union(set1, set2, sets...)
-	result := Union(set1, set2, sets...)
-
-	all.Each(func(item int8) bool {
-		if !set1.Has(item) || !set2.Has(item) {
-			result.Remove(item)
+// Intersection returns a new set which contains items that only exist in all
+// given sets.
+func Intersection(sets ...*Set) *Set {
+	minPos := -1
+	minSize := math.MaxInt64
+	for i, set := range sets {
+		if l := set.Size(); l < minSize {
+			minSize = l
+			minPos = i
 		}
+	}
+	if minSize == math.MaxInt64 || minSize == 0 {
+		return New()
+	}
 
-		for _, set := range sets {
-			if !set.Has(item) {
-				result.Remove(item)
+	t := sets[minPos].Copy()
+	for i, set := range sets {
+		if i == minPos {
+			continue
+		}
+		for item := range t.m {
+			if _, has := set.m[item]; !has {
+				delete(t.m, item)
 			}
 		}
-		return true
-	})
-	return result
+	}
+	return t
 }
 
-// SymmetricDifference returns a new set which s is the difference of items which are in
-// one of either, but not in both.
+// SymmetricDifference returns a new set which s is the difference of items
+// which are in one of either, but not in both.
 func SymmetricDifference(s *Set, t *Set) *Set {
 	u := Difference(s, t)
 	v := Difference(t, s)
