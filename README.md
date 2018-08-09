@@ -31,7 +31,7 @@ In every subpackage Set is the main set structure that holds all the data and me
 #### func  Difference
 
 ```go
-func Difference(set1, set2 *Set, sets ...*Set) *Set
+func Difference(set1 *Set, sets ...*Set) *Set
 ```
 Difference returns a new set which contains items which are in in the first set
 but not in the others.
@@ -39,7 +39,7 @@ but not in the others.
 #### func  Intersection
 
 ```go
-func Intersection(set1, set2 *Set, sets ...*Set) *Set
+func Intersection(sets ...*Set) *Set
 ```
 Intersection returns a new set which contains items that only exist in all given
 sets.
@@ -47,11 +47,9 @@ sets.
 #### func  New
 
 ```go
-func New(ts ...int) *Set
+func New(ts ...T) *Set
 ```
-New creates and initializes a new Set interface. Its single parameter denotes the
-type of set to create. Either ThreadSafe or NonThreadSafe. The default is
-ThreadSafe.
+New creates and initializes a new Set interface.
 
 #### func  SymmetricDifference
 
@@ -64,7 +62,7 @@ are in one of either, but not in both.
 #### func  Union
 
 ```go
-func Union(set1, set2 *Set, sets ...*Set) *Set
+func Union(sets ...*Set) *Set
 ```
 Union is the merger of multiple sets. It returns a new set with all the elements
 present in all the sets that are passed.
@@ -72,7 +70,7 @@ present in all the sets that are passed.
 #### func (*Set) Add
 
 ```go
-func (s *Set) Add(items ...int)
+func (s *Set) Add(items ...T)
 ```
 Add includes the specified items (one or more) to the Set. The underlying Set s
 is modified. If passed nothing it silently returns.
@@ -94,7 +92,7 @@ Copy returns a new Set with a copy of s.
 #### func (*Set) Each
 
 ```go
-func (s *Set) Each(f func(item int) bool)
+func (s *Set) Each(f func(item T) bool)
 ```
 Each traverses the items in the Set, calling the provided function for each Set
 member. Traversal will continue until all items in the Set have been visited, or
@@ -103,7 +101,7 @@ if the closure returns false.
 #### func (*Set) Has
 
 ```go
-func (s *Set) Has(items ...int) bool
+func (s *Set) Has(items ...T) bool
 ```
 Has looks for the existence of items passed. It returns false if nothing is
 passed. For multiple items it returns true only if all of the items exist.
@@ -125,7 +123,7 @@ IsEqual test whether s and t are the same in size and have the same items.
 #### func (*Set) IsSubset
 
 ```go
-func (s *Set) IsSubset(t *Set) (subset bool)
+func (s *Set) IsSubset(t *Set) bool
 ```
 IsSubset tests whether t is a subset of s.
 
@@ -139,7 +137,7 @@ IsSuperset tests whether t is a superset of s.
 #### func (*Set) List
 
 ```go
-func (s *Set) List() []int
+func (s *Set) List() []T
 ```
 List returns a slice of all items. There is also StringSlice() and IntSlice()
 methods for returning slices of type string or int.
@@ -155,7 +153,7 @@ the given t Set.
 #### func (*Set) Pop
 
 ```go
-func (s *Set) Pop() int
+func (s *Set) Pop() T
 ```
 Pop deletes and return an item from the Set. The underlying Set s is modified.
 If Set is empty, nil is returned.
@@ -163,7 +161,7 @@ If Set is empty, nil is returned.
 #### func (*Set) Remove
 
 ```go
-func (s *Set) Remove(items ...int)
+func (s *Set) Remove(items ...T)
 ```
 Remove deletes the specified items from the Set. The underlying Set s is
 modified. If passed nothing it silently returns.
