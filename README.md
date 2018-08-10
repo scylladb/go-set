@@ -49,7 +49,14 @@ sets.
 ```go
 func New(ts ...T) *Set
 ```
-New creates and initializes a new Set interface.
+New creates and initializes a new Set.
+
+#### func  NewWithSize
+
+```go
+func NewWithSize(size int) *Set
+```
+NewWithSize creates a new Set and gives make map a size hint.
 
 #### func  SymmetricDifference
 

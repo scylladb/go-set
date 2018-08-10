@@ -22,21 +22,16 @@ type Set struct {
 	m map[int32]struct{}
 }
 
-// New creates and initializes a new Set interface.
+// New creates and initializes a new Set.
 func New(ts ...int32) *Set {
-	s := newSet(len(ts))
+	s := NewWithSize(len(ts))
 	s.Add(ts...)
 	return s
 }
 
-func newSet(size int) *Set {
-	var m map[int32]struct{}
-	if size < 4 {
-		m = make(map[int32]struct{}, 4)
-	} else {
-		m = make(map[int32]struct{}, int(float64(size)*1.25))
-	}
-	return &Set{m}
+// NewWithSize creates a new Set and gives make map a size hint.
+func NewWithSize(size int) *Set {
+	return &Set{make(map[int32]struct{}, size)}
 }
 
 // Add includes the specified items (one or more) to the Set. The underlying
@@ -142,7 +137,7 @@ func (s *Set) Each(f func(item int32) bool) {
 
 // Copy returns a new Set with a copy of s.
 func (s *Set) Copy() *Set {
-	u := newSet(s.Size())
+	u := NewWithSize(s.Size())
 	for item := range s.m {
 		u.m[item] = keyExists
 	}
