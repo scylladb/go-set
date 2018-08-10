@@ -10,9 +10,6 @@ import (
 	"strings"
 )
 
-// T is a Template type.
-type T = Template
-
 var (
 	// helpful to not write everywhere struct{}{}
 	keyExists   = struct{}{}

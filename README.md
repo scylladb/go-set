@@ -249,7 +249,6 @@ For code generation we use [Google go_generics tool](https://github.com/mmatczuk
 
 ```bash
 go get -u github.com/mmatczuk/go_generics/cmd/go_generics
-go get -u github.com/mmatczuk/go_generics/cmd/go_merge
 ``` 
 
 Once you have `go_generics` installed properly you can regenerate the code using `go generate` in the top level directory.
@@ -260,10 +259,11 @@ If you have types that you would like to use but the are not amenable for inclus
 
 For example, to generate a set for `SomeType` in package `sometypeset` call:
 
+```bash
+./gen_set.sh SomeType sometypeset
 ```
-go_generics -i internal/set/set.go -t T=SomeType -o path/to/outputfile.go -p sometypeset
-go_generics -i internal/set/set_test.go -t P=SomeType -o path/to/outputfile_test.go -p sometypeset
-```
+
+this would generate a new directory `sometypeset` in current working directory.
 
 If you think your addition belongs here we are open to accept pull requests.
 
