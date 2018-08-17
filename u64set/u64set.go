@@ -60,6 +60,17 @@ func (s *Set) Pop() uint64 {
 	return nonExistent
 }
 
+// Pop2 tries to delete and return an item from the Set. The underlying Set s
+// is modified. The boolean flag returned indicates if an item was found. If
+// Set is empty, the zero value is returned with the flag set as false.
+func (s *Set) Pop2() (uint64, bool) {
+	for item := range s.m {
+		delete(s.m, item)
+		return item, true
+	}
+	return nonExistent, false
+}
+
 // Has looks for the existence of items passed. It returns false if nothing is
 // passed. For multiple items it returns true only if all of  the items exist.
 func (s *Set) Has(items ...uint64) bool {
