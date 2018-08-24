@@ -50,8 +50,8 @@ func (s *Set) Remove(items ...[32]byte) {
 	}
 }
 
-// Pop  deletes and return an item from the Set. The underlying Set s is
-// modified. If Set is empty, nil is returned.
+// Pop deletes and returns an item from the Set. The underlying Set s is
+// modified. If Set is empty, the zero value is returned.
 func (s *Set) Pop() [32]byte {
 	for item := range s.m {
 		delete(s.m, item)
@@ -61,8 +61,9 @@ func (s *Set) Pop() [32]byte {
 }
 
 // Pop2 tries to delete and return an item from the Set. The underlying Set s
-// is modified. The boolean flag returned indicates if an item was found. If
-// Set is empty, the zero value is returned with the flag set as false.
+// is modified. The second value is a bool that is true if the item existed in
+// the set, and false if not. If Set is empty, the zero value and false are
+// returned.
 func (s *Set) Pop2() ([32]byte, bool) {
 	for item := range s.m {
 		delete(s.m, item)
