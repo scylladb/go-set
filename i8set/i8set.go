@@ -50,14 +50,26 @@ func (s *Set) Remove(items ...int8) {
 	}
 }
 
-// Pop  deletes and return an item from the Set. The underlying Set s is
-// modified. If Set is empty, nil is returned.
+// Pop deletes and returns an item from the Set. The underlying Set s is
+// modified. If Set is empty, the zero value is returned.
 func (s *Set) Pop() int8 {
 	for item := range s.m {
 		delete(s.m, item)
 		return item
 	}
 	return nonExistent
+}
+
+// Pop2 tries to delete and return an item from the Set. The underlying Set s
+// is modified. The second value is a bool that is true if the item existed in
+// the set, and false if not. If Set is empty, the zero value and false are
+// returned.
+func (s *Set) Pop2() (int8, bool) {
+	for item := range s.m {
+		delete(s.m, item)
+		return item, true
+	}
+	return nonExistent, false
 }
 
 // Has looks for the existence of items passed. It returns false if nothing is

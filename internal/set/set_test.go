@@ -87,6 +87,39 @@ func TestPop(t *testing.T) {
 	}
 }
 
+func TestPop2(t *testing.T) {
+	var e1, e2 T
+	e := createRandomObject(e1)
+	if v, ok := e.(T); ok {
+		e1 = v
+	}
+	e = createRandomObject(e2)
+	if v, ok := e.(T); ok {
+		e2 = v
+	}
+
+	s := New()
+	popped, found := s.Pop2()
+	if popped != nonExistent {
+		t.Errorf("default non existent sentinel not returned, instead got %v", popped)
+	}
+	if found {
+		t.Errorf("set is empty, no element should have been found")
+	}
+
+	s.Add(e1)
+	s.Add(e2)
+
+	_, found = s.Pop2()
+
+	if len(s.m) != 1 {
+		t.Errorf("expected 1 entries, got %d", len(s.m))
+	}
+	if !found {
+		t.Errorf("expected to find an entry")
+	}
+}
+
 func TestHas(t *testing.T) {
 	var e1, e2, e3 T
 	e := createRandomObject(e1)
