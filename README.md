@@ -162,8 +162,17 @@ the given t Set.
 ```go
 func (s *Set) Pop() T
 ```
-Pop deletes and return an item from the Set. The underlying Set s is modified.
-If Set is empty, nil is returned.
+Pop deletes and returns an item from the Set. The underlying Set s is modified.
+If Set is empty, the zero value is returned.
+
+#### func (*Set) Pop2
+
+```go
+func (s *Set) Pop2() (T, bool)
+```
+Pop2 tries to delete and return an item from the Set. The underlying Set s is modified.
+The second value is a bool that is true if the item existed in the set, and false if not.
+If Set is empty, the zero value and false are returned.
 
 #### func (*Set) Remove
 
