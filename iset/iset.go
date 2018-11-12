@@ -84,6 +84,19 @@ func (s *Set) Has(items ...int) bool {
 	return has
 }
 
+// HasAny looks for the existence of any of the items passed.
+// It returns false if nothing is passed.
+// For multiple items it returns true if any of the items exist.
+func (s *Set) HasAny(items ...int) bool {
+	has := false
+	for _, item := range items {
+		if _, has = s.m[item]; has {
+			break
+		}
+	}
+	return has
+}
+
 // Size returns the number of items in a Set.
 func (s *Set) Size() int {
 	return len(s.m)
