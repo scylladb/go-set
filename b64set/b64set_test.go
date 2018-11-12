@@ -154,6 +154,43 @@ func TestHas(t *testing.T) {
 	}
 }
 
+func TestHasAny(t *testing.T) {
+	var e1, e2, e3 [64]byte
+	e := createRandomObject(e1)
+	if v, ok := e.([64]byte); ok {
+		e1 = v
+	}
+	e = createRandomObject(e2)
+	if v, ok := e.([64]byte); ok {
+		e2 = v
+	}
+	e = createRandomObject(e2)
+	if v, ok := e.([64]byte); ok {
+		e3 = v
+	}
+
+	s := New()
+	if s.Has(e1) {
+		t.Errorf("expected a new set to not contain %v", e1)
+	}
+
+	s.Add(e1)
+	s.Add(e2)
+
+	if !s.HasAny(e1) {
+		t.Errorf("expected the set to contain %v", e1)
+	}
+	if !s.HasAny(e2) {
+		t.Errorf("expected the set to contain %v", e2)
+	}
+	if s.HasAny(e3) {
+		t.Errorf("did not expect the set to contain %v", e3)
+	}
+	if !s.HasAny(e1, e3) {
+		t.Errorf("expected the set to contain %v", e1)
+	}
+}
+
 func TestSize(t *testing.T) {
 	var e1, e2 [64]byte
 	e := createRandomObject(e1)
