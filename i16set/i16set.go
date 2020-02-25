@@ -6,7 +6,6 @@ package i16set
 
 import (
 	"fmt"
-	"math"
 	"strings"
 )
 
@@ -15,6 +14,8 @@ var (
 	keyExists   = struct{}{}
 	nonExistent int16
 )
+
+const maxInt = int(^uint(0) >> 1)
 
 // Set is the main set structure that holds all the data
 // and methods used to working with the set.
@@ -245,14 +246,14 @@ func Difference(set1 *Set, sets ...*Set) *Set {
 // given sets.
 func Intersection(sets ...*Set) *Set {
 	minPos := -1
-	minSize := math.MaxInt64
+	minSize := maxInt
 	for i, set := range sets {
 		if l := set.Size(); l < minSize {
 			minSize = l
 			minPos = i
 		}
 	}
-	if minSize == math.MaxInt64 || minSize == 0 {
+	if minSize == maxInt || minSize == 0 {
 		return New()
 	}
 
