@@ -15,7 +15,7 @@ var (
 	nonExistent [8]byte
 )
 
-const MaxInt = int(^uint(0) >> 1)
+const maxInt = int(^uint(0) >> 1)
 
 // Set is the main set structure that holds all the data
 // and methods used to working with the set.
@@ -246,14 +246,14 @@ func Difference(set1 *Set, sets ...*Set) *Set {
 // given sets.
 func Intersection(sets ...*Set) *Set {
 	minPos := -1
-	minSize := MaxInt
+	minSize := maxInt
 	for i, set := range sets {
 		if l := set.Size(); l < minSize {
 			minSize = l
 			minPos = i
 		}
 	}
-	if minSize == MaxInt || minSize == 0 {
+	if minSize == maxInt || minSize == 0 {
 		return New()
 	}
 
