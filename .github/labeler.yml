@@ -1,0 +1,5 @@
+# Every reported changed filename must match this single support-path union.
+omit-from-release-notes:
+  - changed-files:
+      - all-globs-to-all-files:
+          - "{.github/**,docs/**/*.{md,rst,txt},README.md,*_test.go,{b,i,u}{8,16,32,64}set/*_test.go,f{32,64}set/*_test.go,{iset,uset,strset,internal/set}/*_test.go,.travis.yml,.golangci.yml,.gitignore,.editorconfig}"

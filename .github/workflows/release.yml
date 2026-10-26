@@ -1,0 +1,74 @@
+name: Create GitHub release
+
+on:
+  push:
+    tags: ['v[0-9]*.[0-9]*.[0-9]*']
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify version tag and publish generated release notes
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        with:
+          script: |
+            const tag = context.ref.replace(/^refs\/tags\//, '');
+            if (!/^v[0-9]+\.[0-9]+\.[0-9]+$/.test(tag) ||
+                context.ref !== `refs/tags/${tag}`) {
+              throw new Error('Expected a version tag such as v1.0.2');
+            }
+            const repo = context.repo;
+            const verifyTag = async () => {
+              const {data: reference} = await github.rest.git.getRef({
+                ...repo, ref: `tags/${tag}`
+              });
+              if (reference.ref !== context.ref) throw new Error('Unexpected tag reference');
+              let object = reference.object;
+              const visited = new Set();
+              while (object.type === 'tag') {
+                if (visited.has(object.sha)) throw new Error('Cycle in annotated version tag');
+                visited.add(object.sha);
+                const {data: annotated} = await github.rest.git.getTag({
+                  ...repo, tag_sha: object.sha
+                });
+                object = annotated.object;
+              }
+              if (object.type !== 'commit' || object.sha !== context.sha) {
+                throw new Error('Version tag no longer identifies the triggering commit');
+              }
+            };
+            await verifyTag();
+            let existing;
+            try {
+              existing = (await github.rest.repos.getReleaseByTag({...repo, tag})).data;
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+            if (existing) {
+              if (existing.draft || !existing.published_at || existing.tag_name !== tag) {
+                throw new Error('Existing release is not published for this tag; resolve it before rerunning');
+              }
+              core.info(`Preserving published release ${existing.html_url}`);
+              return;
+            }
+            const {data: notes} = await github.rest.repos.generateReleaseNotes({
+              ...repo, tag_name: tag, target_commitish: context.sha,
+              configuration_file_path: '.github/release.yml'
+            });
+            await verifyTag();
+            const {data: release} = await github.rest.repos.createRelease({
+              ...repo, tag_name: tag, target_commitish: context.sha,
+              name: notes.name, body: notes.body, draft: false, prerelease: false
+            });
+            if (release.draft || !release.published_at || release.tag_name !== tag) {
+              throw new Error('GitHub did not return a published release for the version tag');
+            }
+            core.info(`Published ${release.html_url}`);
